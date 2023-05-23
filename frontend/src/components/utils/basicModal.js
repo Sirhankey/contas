@@ -28,7 +28,7 @@ export default function BasicModal(conta) {
 
   return (
     <div>
-      <Button style={button_edit} onClick={handleOpen}>Editar Conta</Button>
+      <Button style={button_edit} onClick={handleOpen}>Pagar Conta</Button>
       <Modal
         open={open}
         onClose={handleClose}
