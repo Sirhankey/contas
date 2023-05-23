@@ -128,6 +128,7 @@ const Form = () => {
                         name="grupo"
                         select
                         label="Grupo"
+                        helperText="Selecione o Grupo"
                         defaultValue=""
                         variant="filled"
                     >
