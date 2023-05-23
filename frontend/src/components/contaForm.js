@@ -46,7 +46,7 @@ const updateConta = async (conta, dta_pagamento, forma_pagamento) => {
         dta_pagamento: dta_pagamento,
         pago: true
     };
-
+    if(dta_pagamento && forma_pagamento)
     try {
         const res = await axios.put(`http://127.0.0.1:3333/contas/${conta.id}`, {
             contaUpdate
@@ -78,7 +78,7 @@ const ContaForm = (conta) => {
     return (
         <FormContainer onSubmit={handleSubmit} ref={ref}>
             <Typography variant="h6" gutterBottom>
-                Editar Conta
+                Pagar Conta
             </Typography>
             <Grid container spacing={3}>
                 <Grid item xs={12} sm={12}>
@@ -183,6 +183,7 @@ const ContaForm = (conta) => {
                 <Divider style={divider} />
                 <Grid item xs={12} sm={6}>
                     <TextField
+                        required
                         id="dta_pagamento"
                         name="dta_pagamento"
                         label="Data de Pagamento"
@@ -193,6 +194,7 @@ const ContaForm = (conta) => {
                 </Grid>
                 <Grid item xs={12} sm={6}>
                     <TextField
+                        required
                         id="forma_pagamento"
                         name="forma_pagamento"
                         label="Forma de Pagamento"
