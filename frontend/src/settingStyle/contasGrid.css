@@ -1,0 +1,13 @@
+.contas-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    
+  }
+  
+  .contas {
+    background-color: #d2d2d2;
+    padding: 10px;
+    
+  }
+  
