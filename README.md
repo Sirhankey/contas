@@ -20,3 +20,5 @@ TODO:
 ( ) O sistema não atualiza após deletar uma conta;
 
 ( ) O sistema não atualiza após editar uma conta;
+
+( ) Quando eu cadastro uma conta com desconto zero o sistema não consegue ler o zero na hora da edição;
