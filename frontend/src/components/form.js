@@ -129,7 +129,6 @@ const Form = () => {
                         select
                         label="Grupo"
                         defaultValue=""
-                        helperText="Selecione o Grupo"
                         variant="filled"
                     >
                         {options.map((option) => (
