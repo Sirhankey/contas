@@ -1,81 +1,67 @@
-const {v4:uuidv4} = require('uuid')
-// const {departments} = require ('./departmentController')
-const { getContas, addConta} = require('./contaFileController')
+const { v4: uuidv4 } = require('uuid')
+const { getConta, createConta, deleteConta, updateConta } = require('../services/contaService')
 
-let contas = []
 
-const getAllContas = (req,res)=>{
+// Criar uma nova conta
+async function create(req, res) {
     try {
-        getContas(req,res)
-        res.status(200).json(contas)
-    } catch (error) {
-        
-    }
-}
-
-const addContas = (req,res)=>{
-    const conta = req.body
-    try{
-    //    if(contas.some(conta=>conta.id===req.body.id))
-    //    {
-    //       return res.status(400).json({message:'Conta já existe!'})         
-    //    }
-       
-       /*
-       if(!departments.includes(employee.department)) 
-       {
-        return res.status(404).json({message:'Invalid Department'})
-       }
-       */
-
+        const conta = { ...req.body };
         conta.id = uuidv4()
-        contas.push(conta)
-        res.status(200).json(conta)
+        const createdConta = await createConta(conta);
+        res.json(createdConta);
+    } catch (error) {
+        res.status(500).json({ message: error.message })
     }
-    catch(err)
-    {
-        console.error(err)
-        res.status(500).json({message:'Server Error'})
-    }
-    
 }
 
-const updateContas = (req,res)=>{
-    const id = req.params.id
-    const conta = req.body
-    
-    try{
-        const index = contas.findIndex((e)=>e.id===id)
-        if(index === -1)
-        {
-            return res.status(404).json({message:'Conta não encontrada'})
+//Obter conta
+async function get(req, res) {
+    try {
+        console.log("INICIOU O GET")
+        const { id } = req.query
+        if (!id) {
+            const contas = await getConta()
+            return res.json(contas)
         }
-        contas[index] ={...contas[index],... conta}
-        res.status(200).json(contas[index])
+        const contas = await getConta({ where: { id } })
+
+        res.json(contas)
     }
-    catch(err)
-    {
-        console.error(err)
-        res.status(500).json({message:'Server Error'})
+    catch (error) {
+        console.error(error)
+        res.status(500).send({ message: 'Server Error' })
     }
 }
 
-const removeContas = (req,res)=>{      
-    const id = req.params.id
-    try{
-        const index = contas.findIndex((e)=>e.id===id)
-        if(index === -1)
-        {
-            return res.status(404).json({message:'Conta não encontrada'})
-        }
-        contas.splice(index,1)
-        res.status(200).json({message:'Conta deletada!'})
-    }
-    catch(err)
-    {
-        console.error(err)
-        res.status(500).json({message:'Server Error'})
+// Atualizar uma conta por ID
+async function update(req, res) {
+    try {
+        const { id } = req.query;
+        const { conta } = req.body;
+        const updatedConta = await updateConta(id, conta);
+        res.json(updatedConta);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
     }
 }
 
-module.exports = {getContas,addContas,updateContas,removeContas}
+// Excluir uma conta por ID
+async function remove(req, res) {
+    try {
+        const { id } = req.query;
+        await deleteConta(id);
+        res.sendStatus(200).send("Conta removida com sucesso!");
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+}
+
+
+
+
+module.exports = {
+    create,
+    get,
+    update,
+    remove,
+};

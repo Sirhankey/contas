@@ -1,5 +1,5 @@
 const { v4: uuidv4 } = require('uuid')
-const { validateDataContas } = require('../model/contaModel')
+const { validateDataContas } = require('../models/contaModel')
 const fs = require('fs')
 
 

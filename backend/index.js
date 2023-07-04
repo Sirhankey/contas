@@ -1,16 +1,34 @@
 const express  = require('express')
-const cors = require('cors')
 const app = express()
+const conn = require('./database/conn')
+const cors = require('cors')
 
-const contaRoutes = require('./routes/contaRoutes')
+const contasRoutes = require('./routes/contaRoutes')
+const authenticationRoutes = require('./routes/authRoutes')
 
-const host = '127.0.0.1'
-const port = 3333
+// const ContaModelDB = require('./models/ContaModelDB')
+// const GrupoModelDB = require('./models/GrupoModelDB')
 
-app.use(cors("http://localhost:3333/contas"))
+app.use(
+    express.urlencoded({
+        extended:true
+    })
+)
 app.use(express.json())
-app.use('/contas',contaRoutes)
+app.use(cors("http://localhost:3334/contas"))
 
-app.listen(port, host,()=>{
-    console.log(`Server running at http://${host}:${port}`)
-})
+app.use('/login', authenticationRoutes)
+app.use('/contas',contasRoutes)
+
+// ContaModelDB.belongsTo(GrupoModelDB, { foreignKey: 'grupo_id' })
+
+conn.sync({ force: false }) 
+  .then(() => {
+    console.log('sync OK')
+    app.listen(3334,()=>{
+      console.log('Server starting')
+     })
+  })
+  .catch((error) => {
+    console.error('Error sync:', error);
+  })

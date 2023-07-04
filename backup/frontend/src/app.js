@@ -50,7 +50,7 @@ function App() {
   return (
     <div >
       <Container>
-        <Title> Controle de Contas </Title>
+        <Title> Controle de Contas</Title>
         <Form/>        
         <Grid contas={contas}/>
       </Container>

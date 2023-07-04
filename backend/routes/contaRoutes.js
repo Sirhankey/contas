@@ -1,14 +1,16 @@
 const express = require('express')
 const router = express.Router()
 
-const contaController = require('../controller/contaFileController')
+const contaController = require('../controller/contaController')
 
-router.get('/',contaController.getContas)
+router.get('/', contaController.get)
 
-router.post('/add',contaController.addConta)
+router.get('/:id', contaController.get)
 
-router.put('/:id',contaController.updateConta )
+router.post('/', contaController.create)
 
-router.delete('/:id',contaController.removeConta )
+// router.put('/contas/:id', contaController.update)
 
-module.exports= router
+// router.delete('/contas/:id', contaController.remove)
+
+module.exports = router;
